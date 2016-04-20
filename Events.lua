@@ -2,11 +2,13 @@
 -- @module Events
 
 Events = {}
-Events.available = {on_player_closed = true, on_player_opened = true, on_entity_renamed = true}
+Events.available = {on_player_closed = true, on_player_opened = true, on_entity_renamed = true, on_player_opened_self = true, on_player_closed_self = true}
 Events.registered = {on_player_closed={}}
 Events.__on_player_opened = false
 Events.__on_player_closed = false
 Events.__on_entity_renamed = false
+Events.__on_player_opened_self = false
+Events.__on_player_closed_self = false
 
 Events.get = function(name)
   if Events["__"..name] == false then
@@ -20,6 +22,18 @@ Events.generate = function()
   for name, _ in pairs(Events.available) do
     Events.get(name)
   end
+end
+
+Events.dispatch_player_opened_self = function(player)
+  log("opened self")
+  global.players[player.index].opened_self = true
+  game.raise_event( Events.get("on_player_opened_self"), { player_index = player.index } )
+end
+
+Events.dispatch_player_closed_self = function(player)
+  log("closed self")
+  game.raise_event( Events.get("on_player_closed_self"), { player_index = player.index } )
+  global.players[player.index].opened_self = nil
 end
 
 Events.dispatch_player_opened = function(player)

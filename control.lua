@@ -65,8 +65,12 @@ local function on_tick(event)
             if global.players[player.index].opened and player.opened == nil then
               Events.dispatch_player_closed(player)
             end
-          else
-
+            if player.opened_self and not global.players[player.index].opened_self then
+              Events.dispatch_player_opened_self(player)
+            end
+            if global.players[player.index].opened_self and not player.opened_self then
+              Events.dispatch_player_closed_self(player)
+            end
           end
         end
       end)
