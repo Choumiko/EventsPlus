@@ -1,0 +1,9 @@
+{
+  "name": "EventsPlus",
+  "version": "0.0.1",
+  "title": "Events Plus",
+  "author": "Choumiko",
+  "contact": "www.factorioforums.com",
+  "description": "More events",
+  "dependencies": ["base >= 0.12.30"]
+} 
